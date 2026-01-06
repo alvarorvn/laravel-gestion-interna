@@ -20,6 +20,7 @@
       <th>Nombre</th>
       <th>Email</th>
       <th>Teléfono</th>
+      <th>Acciones</th>
     </tr>
 
     @foreach($clientes as $cliente)
@@ -27,6 +28,15 @@
         <td>{{ $cliente->nombre }}</td>
         <td>{{ $cliente->email }}</td>
         <td>{{ $cliente->telefono }}</td>
+        <td>
+          <a href="{{ route('clientes.edit', $cliente) }}">Editar</a>
+
+          <form method="POST" action="{{ route('clientes.destroy', $cliente) }}" style="display:inline">
+            @csrf
+            @method('DELETE')
+            <button type="submit" onclick="return confirm('¿Eliminar cliente?')">Eliminar</button>
+          </form>
+        </td>
       </tr>
     @endforeach
   </table>
