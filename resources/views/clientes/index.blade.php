@@ -31,11 +31,13 @@
         <td>
           <a href="{{ route('clientes.edit', $cliente) }}">Editar</a>
 
+          @if(auth()->user()->isAdmin())
           <form method="POST" action="{{ route('clientes.destroy', $cliente) }}" style="display:inline">
             @csrf
             @method('DELETE')
             <button type="submit" onclick="return confirm('¿Eliminar cliente?')">Eliminar</button>
           </form>
+          @endif
         </td>
       </tr>
     @endforeach

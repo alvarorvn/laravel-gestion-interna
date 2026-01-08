@@ -25,7 +25,7 @@ class ClienteController extends Controller
 
         return redirect()
             ->route('clientes.index')
-            ->with('success', 'Cliente creado correctamente');
+            ->with('success', 'Cliente creado');
     }
 
     public function edit(Cliente $cliente)
@@ -39,15 +39,18 @@ class ClienteController extends Controller
 
         return redirect()
             ->route('clientes.index')
-            ->with('succes', 'Cliente actualizado correctamente');
+            ->with('succes', 'Cliente actualizado');
     }
 
     public function destroy(Cliente $cliente)
     {
+        if (!auth()->user()->isAdmin()) {
+            abort(403);
+        }
         $cliente->delete();
 
         return redirect()
             ->route('clientes.index')
-            ->with('success', 'Cliente eliminado correctamente');
+            ->with('success', 'Cliente eliminado');
     }
 }
