@@ -24,7 +24,10 @@ class ClienteController extends Controller
 
     public function store(StoreClientRequest $request)
     {
-        Cliente::create($request->validated());
+        Cliente::create([
+            ...$request->validated(),
+            'created_by'=>auth()->id(),
+        ]);
 
         return redirect()
             ->route('clientes.index')
@@ -38,6 +41,8 @@ class ClienteController extends Controller
 
     public function update(UpdateClientRequest $request, Cliente $cliente)
     {
+        $this->authorize('update', $cliente);
+
         $cliente->update($request->validated());
 
         return redirect()

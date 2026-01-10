@@ -37,7 +37,7 @@ class ClientePolicy
      */
     public function update(User $user, Cliente $cliente): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $cliente->created_by === $user->id;
     }
 
     /**

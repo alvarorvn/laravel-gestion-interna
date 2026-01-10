@@ -47,6 +47,11 @@ class User extends Authenticatable
         ];
     }
 
+    public function clientes()
+    {
+        return $this->hasMany(Cliente::class, 'created_by');
+    }
+
     public function isAdmin(): bool
     {
         return $this->role === 'admin';

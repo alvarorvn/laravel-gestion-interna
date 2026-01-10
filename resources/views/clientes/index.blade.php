@@ -29,7 +29,9 @@
         <td>{{ $cliente->email }}</td>
         <td>{{ $cliente->telefono }}</td>
         <td>
-          <a href="{{ route('clientes.edit', $cliente) }}">Editar</a>
+          @can('update', $cliente)
+            <a href="{{ route('clientes.edit', $cliente) }}">Editar</a>
+          @endcan
 
           @can('delete', $cliente)
           <form method="POST" action="{{ route('clientes.destroy', $cliente) }}" style="display:inline">
