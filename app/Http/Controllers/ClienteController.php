@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
 use App\Models\Cliente;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ClienteController extends Controller
 {
+    use AuthorizesRequests;
+
     public function index()
     {
         $clientes = Cliente::latest()->get();
@@ -44,9 +47,7 @@ class ClienteController extends Controller
 
     public function destroy(Cliente $cliente)
     {
-        if (!auth()->user()->isAdmin()) {
-            abort(403);
-        }
+        $this->authorize('delete', $cliente);
         $cliente->delete();
 
         return redirect()
