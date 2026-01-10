@@ -13,7 +13,11 @@ class ClienteController extends Controller
 
     public function index()
     {
-        $clientes = Cliente::latest()->get();
+        $user = auth()->user();
+
+        $clientes = Cliente::latest()->with('creator')
+            ->when(!$user->isAdmin(), fn($query)=>$query->where('created_by', $user->id))
+            ->get();
         return view('clientes.index', compact('clientes'));
     }
 
@@ -36,6 +40,8 @@ class ClienteController extends Controller
 
     public function edit(Cliente $cliente)
     {
+        $this->authorize('update', $cliente);
+
         return view('clientes.edit', compact('cliente'));
     }
 

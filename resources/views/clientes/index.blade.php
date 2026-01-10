@@ -21,6 +21,7 @@
       <th>Email</th>
       <th>Teléfono</th>
       <th>Acciones</th>
+      <th>Creado por</th>
     </tr>
 
     @foreach($clientes as $cliente)
@@ -41,6 +42,7 @@
           </form>
           @endcan
         </td>
+        <td>{{ $cliente->creator->name }}</td>
       </tr>
     @endforeach
   </table>
